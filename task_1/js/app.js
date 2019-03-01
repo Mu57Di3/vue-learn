@@ -15,7 +15,7 @@
                         id: 1,
                         name: "Хьюберт Фарнсворт",
                         position: "Директор",
-                        image: "./img/prof.jpg"
+                        image: "./img/prof.jpg",
                     },
                     {
                         id: 2,
@@ -26,31 +26,31 @@
                         id: 3,
                         name: "Лила Туранга",
                         position: "Курьер",
-                        image: "./img/lela.jpg"
+                        image: "./img/lela.jpg",
                     },
                     {
                         id: 4,
                         name: "Филип Джей Фрай",
                         position: "Курьер",
-                        image: "./img/fry.jpg"
+                        image: "./img/fry.jpg",
                     },
                     {
                         id: 5,
                         name: "Бендер Сгибальщик Родригес",
                         position: "Курьер",
-                        image: "./img/bender.jpg"
+                        image: "./img/bender.jpg",
                     },
                 ],
             };
         },
-        computed:{
+        computed: {
             /**
              * Вычисляемое свойство количество сотрудников
              * @returns {number}
              */
-            employeesCount: function () {
+            employeesCount: function() {
                 return this.employees.length;
-            }
+            },
         },
         filters: {
             /**
@@ -59,8 +59,8 @@
              * @param defValue - значение по умолчанию
              * @returns {*}
              */
-            isEmpty: function (value, defValue) {
-                return value || defValue
+            isEmpty: function(value, defValue) {
+                return value || defValue;
             },
 
             /**
@@ -68,25 +68,25 @@
              * @param value - трасформируемая строка
              * @returns {string}
              */
-            upperCase: function (value) {
+            upperCase: function(value) {
                 return String(value).toUpperCase();
-            }
+            },
         },
         methods: {
             /**
              * Переключает видимость списка пользователей
              */
-            toggleEmployeesVisible: function () {
-                this.employeesListVisible = !this.employeesListVisible
+            toggleEmployeesVisible: function() {
+                this.employeesListVisible = !this.employeesListVisible;
             },
 
             /**
              * Колбек успешного копирования значения в буфер обмена
              * @param text
              */
-            handleCopy: function (text) {
-                console.log("Copy to clipboard ", text)
-            }
-        }
+            handleCopy: function(text) {
+                console.log("Copy to clipboard ", text);
+            },
+        },
     });
 })();

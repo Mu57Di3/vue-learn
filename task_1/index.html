@@ -54,7 +54,12 @@
                             </td>
                             <td>
                                 {{ employee.name }}
-                                <button type="button" class="btn btn-link" v-copy="employee.name" v-copy:callback="handleCopy">
+                                <button
+                                    type="button"
+                                    class="btn btn-link"
+                                    v-copy="employee.name"
+                                    v-copy:callback="handleCopy"
+                                >
                                     <i class="far fa-copy"></i>
                                 </button>
                             </td>
