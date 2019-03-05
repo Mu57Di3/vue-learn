@@ -144,3 +144,7 @@ $RECYCLE.BIN/
 .idea/modules.xml
 .idea/vcs.xml
 .idea/vue-learn.iml
+/.idea/templateLanguages.xml
+.idea/templateLanguages.xml
+test.html
+/.idea/jsLibraryMappings.xml

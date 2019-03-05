@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Задание 1 список пользователей</title>
+    <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+            integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+            crossorigin="anonymous"
+    />
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+    />
+</head>
+<body>
+<div id="app" class="container" v-cloak>
+    <div class="row">
+        <h1>
+            <i class="fas fa-users"></i> Пользователи
+            <span class="badge badge-secondary">{{ employeesCount }}</span>
+        </h1>
+    </div>
+    <div class="row">
+        <users-table v-bind:list="employees"></users-table>
+    </div>
+</div>
+
+<template id="users-list">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Фото</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Должность</th>
+            </tr>
+            </thead>
+            <tbody v-for="employee in list" v-bind:key="employee.id">
+            <tr>
+                <th scope="row">{{ employee.id }}</th>
+                <td>
+                    <img
+                            v-bind:src="employee.image || './img/no-avatar.png'"
+                            class="img-thumbnail rounded mx-auto "
+                    />
+                </td>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.position }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>
