@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "dependencies": {
     
+  },
+  "scripts": {
+    "task_2": "json-server --watch ./task_2/db/db.json"
   }
 }
