@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-12">
-        <table class="table">
-            <thead>
+        <table class="table table-striped">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Фото</th>
@@ -10,9 +10,9 @@
                     <th scope="col">&nbsp;</th>
                 </tr>
             </thead>
-            <tbody v-for="(employee, index) in list" v-bind:key="employee.id">
-                <tr>
-                    <th scope="row">{{ index }}</th>
+            <tbody>
+                <tr v-for="(employee, index) in list" v-bind:key="employee.id">
+                    <th scope="row">{{ index + 1 }}</th>
                     <td>
                         <img
                             v-bind:src="employee.picture || './img/no-avatar.png'"
