@@ -1,8 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Edit from "./views/Edit.vue";
-import Add from "./views/Add.vue";
-import Home from "./views/Home.vue";
+import Home from "./views/Home";
 
 Vue.use(Router);
 
@@ -18,12 +16,12 @@ export default new Router({
         {
             path: "/add",
             name: "add",
-            component: Add,
+            component: ()=> import(/* webpackChunkName: "users-add" */ "./views/Add"),
         },
         {
             path: "/edit",
             name: "edit",
-            component: Edit,
+            component: ()=> import(/* webpackChunkName: "users-edit" */ "./views/Edit"),
         },
     ],
 });

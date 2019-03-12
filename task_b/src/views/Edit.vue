@@ -3,7 +3,15 @@
         <div class="col-md-12"><h1>Редактирование пользователя</h1></div>
         <div class="col-md-12">
             <div v-if="!user" class="alert alert-warning">Загрузка...</div>
-            <user-form v-else v-bind:user-data="user" @save-user="saveHandler" @cancel-form="cancelHandler"></user-form>
+            <user-form v-else v-model="user"></user-form>
+        </div>
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" title="Сохранить" @click="saveHandler">
+                <i class="fas fa-check-circle"></i> Сохранить
+            </button>
+            <button type="button" class="btn btn-light" title="Отмена" @click="cancelHandler">
+                <i class="fas fa-times-circle"></i> Отмена
+            </button>
         </div>
     </div>
 </template>
@@ -28,8 +36,8 @@ export default {
         });
     },
     methods: {
-        saveHandler: function(newUserData) {
-            query.put(`employees/${newUserData.id}`, newUserData).then(() => {
+        saveHandler: function() {
+            query.put(`employees/${this.user.id}`, this.user).then(() => {
                 this.$router.push("/");
             });
         },
