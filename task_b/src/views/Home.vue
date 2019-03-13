@@ -1,13 +1,29 @@
 <template>
     <div>
         <div class="row">
-            <h1>
-                <i class="fas fa-users"></i> Пользователи
-                <span class="badge badge-secondary">{{ employeesCount }}</span>
-            </h1>
+            <h1><i class="fas fa-users"></i> Список пользователей</h1>
         </div>
         <div class="row">
-            <users-list :list="employees" @remove-user="removeHandler" @edit-user="editHandler"></users-list>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <span>
+                            Пользователей в базе <span class="badge badge-secondary">{{ employeesCount }}</span>
+                        </span>
+                        <button type="button" class="btn btn-primary float-right  btn-sm">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <users-list
+                            :list="employees"
+                            @remove-user="removeHandler"
+                            @edit-user="editHandler"
+                            @search-user="searchHandler"
+                        ></users-list>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -22,12 +38,11 @@ export default {
     data: function() {
         return {
             employees: [],
+            search: "",
         };
     },
     mounted: function() {
-        query.get("employees").then(response => {
-            this.employees = response.data;
-        });
+        this.getEmployees();
     },
     components: {
         "users-list": UserList,
@@ -48,6 +63,17 @@ export default {
 
         editHandler: function(id) {
             this.$router.push({ path: "edit", query: { id: id } });
+        },
+
+        getEmployees: function() {
+            query.get(`employees${this.search ? "?name.last_like=" + this.search : ""}`).then(response => {
+                this.employees = response.data;
+            });
+        },
+
+        searchHandler: function(search) {
+            this.search = search;
+            this.getEmployees();
         },
     },
 };

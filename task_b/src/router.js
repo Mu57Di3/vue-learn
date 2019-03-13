@@ -16,12 +16,12 @@ export default new Router({
         {
             path: "/add",
             name: "add",
-            component: ()=> import(/* webpackChunkName: "users-add" */ "./views/Add"),
+            component: () => import(/* webpackChunkName: "users-add" */ "./views/Add"),
         },
         {
             path: "/edit",
             name: "edit",
-            component: ()=> import(/* webpackChunkName: "users-edit" */ "./views/Edit"),
+            component: () => import(/* webpackChunkName: "users-edit" */ "./views/Edit"),
         },
     ],
 });

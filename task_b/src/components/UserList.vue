@@ -1,59 +1,111 @@
 <template>
-    <div class="col-md-12">
-        <table class="table table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Фото</th>
-                    <th scope="col">Имя</th>
-                    <th scope="col">Компания</th>
-                    <th scope="col">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(employee, index) in list" v-bind:key="employee.id">
-                    <th scope="row">{{ index + 1 }}</th>
-                    <td>
-                        <img
-                            v-bind:src="employee.picture || './img/no-avatar.png'"
-                            class="img-thumbnail rounded mx-auto "
-                        />
-                    </td>
-                    <td>{{ `${employee.name.first} ${employee.name.last}` }}</td>
-                    <td>{{ employee.company }}</td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button
-                                type="button"
-                                class="btn btn-link"
-                                title="Редактировать"
-                                @click="editHandler(employee.id)"
-                            >
-                                <i class="fas fa-user-edit"></i>
-                            </button>
-                            <button
-                                type="button"
-                                class="btn btn-link"
-                                @click="removeHandler(employee.id)"
-                                title="Удалить"
-                            >
-                                <i class="fas fa-user-slash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div>
+        <div class="row">
+            <div class="col-md-3"><search-field v-model="lastNameFilter"></search-field></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Фото</th>
+                            <th scope="col">Имя</th>
+                            <th scope="col">Компания</th>
+                            <th scope="col">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="employee in listPage" v-bind:key="employee.id">
+                            <th scope="row">{{ employee.id }}</th>
+                            <td>
+                                <img
+                                    v-bind:src="employee.picture || './img/no-avatar.png'"
+                                    class="img-thumbnail rounded mx-auto "
+                                />
+                            </td>
+                            <td>{{ `${employee.name.first} ${employee.name.last}` }}</td>
+                            <td>{{ employee.company }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button
+                                        type="button"
+                                        class="btn btn-link"
+                                        title="Редактировать"
+                                        @click="editHandler(employee.id)"
+                                    >
+                                        <i class="fas fa-user-edit"></i>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-link"
+                                        @click="removeHandler(employee.id)"
+                                        title="Удалить"
+                                    >
+                                        <i class="fas fa-user-slash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <pagination
+                    :total="listSize"
+                    v-model="currentPage"
+                    :size="pageSize"
+                    v-if="list.length > pageSize"
+                ></pagination>
+            </div>
+            <div class="col-md-2">
+                <page-size-control v-model="pageSize" v-if="list.length > pageSize"></page-size-control>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import Pagination from "./Pagination";
+import PageSizeControl from "./PageSizeControl";
+import SearchField from "./SearchField";
+
 export default {
     name: "UserList",
+    components: {
+        Pagination,
+        PageSizeControl,
+        SearchField,
+    },
     props: {
         list: {
             type: Array,
             required: true,
+        },
+    },
+    data: function() {
+        return {
+            currentPage: 0,
+            pageSize: 10,
+            lastNameFilter: "",
+        };
+    },
+    watch: {
+        lastNameFilter: "searchHandler",
+    },
+    computed: {
+        listSize: function() {
+            return this.list.length || 0;
+        },
+
+        listPage: function() {
+            return this.list.slice(this.firstIdOfPage, this.firstIdOfPage + this.pageSize) || [];
+        },
+
+        firstIdOfPage: function() {
+            return this.currentPage * this.pageSize;
         },
     },
     methods: {
@@ -63,6 +115,10 @@ export default {
 
         editHandler: function(id) {
             this.$emit("edit-user", id);
+        },
+
+        searchHandler: function() {
+            this.$emit("search-user", this.lastNameFilter);
         },
     },
 };
