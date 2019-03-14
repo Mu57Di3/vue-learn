@@ -1,7 +1,7 @@
 <template>
     <div class="form-group">
         <select v-model="currentValue" class="form-control form-control-sm">
-            <option v-for="(val, index) in list" :key="index">{{ val }}</option>
+            <option v-for="(val, index) in list" :key="val">{{ val }}</option>
         </select>
     </div>
 </template>

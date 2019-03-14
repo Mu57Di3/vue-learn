@@ -148,3 +148,4 @@ $RECYCLE.BIN/
 .idea/templateLanguages.xml
 test.html
 /.idea/jsLibraryMappings.xml
+/.idea/jsLinters/eslint.xml
