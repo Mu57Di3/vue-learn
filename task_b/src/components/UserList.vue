@@ -16,11 +16,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="employee in listPage" v-bind:key="employee.id">
+                        <tr v-for="employee in listPage" :key="employee.id">
                             <th scope="row">{{ employee.id }}</th>
                             <td>
                                 <img
-                                    v-bind:src="employee.picture || './img/no-avatar.png'"
+                                    :src="employee.picture || './img/no-avatar.png'"
                                     class="img-thumbnail rounded mx-auto "
                                 />
                             </td>
@@ -39,8 +39,8 @@
                                     <button
                                         type="button"
                                         class="btn btn-link"
-                                        @click="removeHandler(employee.id)"
                                         title="Удалить"
+                                        @click="removeHandler(employee.id)"
                                     >
                                         <i class="fas fa-user-slash"></i>
                                     </button>
@@ -54,14 +54,14 @@
         <div class="row">
             <div class="col-md-10">
                 <pagination
-                    :total="listSize"
-                    v-model="currentPage"
-                    :size="pageSize"
                     v-if="list.length > pageSize"
+                    v-model="currentPage"
+                    :total="listSize"
+                    :size="pageSize"
                 ></pagination>
             </div>
             <div class="col-md-2">
-                <page-size-control v-model="pageSize" v-if="list.length > pageSize"></page-size-control>
+                <page-size-control v-if="list.length > pageSize" v-model="pageSize"></page-size-control>
             </div>
         </div>
     </div>
@@ -92,9 +92,6 @@ export default {
             lastNameFilter: "",
         };
     },
-    watch: {
-        lastNameFilter: "searchHandler",
-    },
     computed: {
         listSize: function() {
             return this.list.length || 0;
@@ -107,6 +104,9 @@ export default {
         firstIdOfPage: function() {
             return this.currentPage * this.pageSize;
         },
+    },
+    watch: {
+        lastNameFilter: "searchHandler",
     },
     methods: {
         removeHandler: function(id) {

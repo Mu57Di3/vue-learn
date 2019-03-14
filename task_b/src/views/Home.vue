@@ -31,32 +31,33 @@
 <script>
 import UserList from "../components/UserList";
 import query from "../tools/Query";
-import _ from "lodash";
 
 export default {
-    name: "home",
+    name: "Home",
+    components: {
+        "users-list": UserList,
+    },
     data: function() {
         return {
             employees: [],
             search: "",
         };
     },
-    mounted: function() {
-        this.getEmployees();
-    },
-    components: {
-        "users-list": UserList,
-    },
     computed: {
         employeesCount: function() {
             return this.employees.length;
         },
     },
+    mounted: function() {
+        this.getEmployees();
+    },
     methods: {
         removeHandler: function(id) {
             if (confirm("Вы уверенны что хотите удалить пользователя?")) {
                 query.delete(`employees/${id}`).then(() => {
-                    this.employees = _.reject(this.employees, { id: id });
+                    this.employees = this.employees.filter(item => {
+                        return item.id !== id;
+                    });
                 });
             }
         },
@@ -66,7 +67,13 @@ export default {
         },
 
         getEmployees: function() {
-            query.get(`employees${this.search ? "?name.last_like=" + this.search : ""}`).then(response => {
+            let options = {};
+            if (this.search) {
+                options["params"] = {
+                    "name.last_like": this.search,
+                };
+            }
+            query.get("employees", options).then(response => {
                 this.employees = response.data;
             });
         },

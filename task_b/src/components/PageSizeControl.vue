@@ -1,6 +1,6 @@
 <template>
     <div class="form-group">
-        <select class="form-control form-control-sm" v-model="currentValue">
+        <select v-model="currentValue" class="form-control form-control-sm">
             <option v-for="(val, index) in list" :key="index">{{ val }}</option>
         </select>
     </div>
@@ -26,11 +26,11 @@ export default {
             currentValue: 10,
         };
     },
-    mounted: function() {
-        this.currentValue = this.value;
-    },
     watch: {
         currentValue: "inputHandler",
+    },
+    mounted: function() {
+        this.currentValue = this.value;
     },
     methods: {
         inputHandler: function() {

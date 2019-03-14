@@ -21,7 +21,7 @@ import UserForm from "../components/UserForm";
 import query from "../tools/Query";
 
 export default {
-    name: "edit",
+    name: "Edit",
     components: {
         UserForm,
     },
@@ -38,11 +38,15 @@ export default {
     methods: {
         saveHandler: function() {
             query.put(`employees/${this.user.id}`, this.user).then(() => {
-                this.$router.push("/");
+                this.goToHome();
             });
         },
 
         cancelHandler: function() {
+            this.goToHome();
+        },
+
+        goToHome: function() {
             this.$router.push("/");
         },
     },

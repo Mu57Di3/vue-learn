@@ -1,12 +1,12 @@
 <template>
-    <nav aria-label="Page navigation example" v-if="total > size">
+    <nav v-if="total > size" aria-label="Page navigation example">
         <ul class="pagination">
             <li :class="['page-item', { disabled: current === 0 }]">
                 <a class="page-link" href="#" aria-label="Previous" @click="pageChangeHadler(current - 1)">
                     <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
                 </a>
             </li>
-            <li :class="['page-item', { active: page === current }]" v-for="page in pageGenerator" :key="page">
+            <li v-for="page in pageGenerator" :key="page" :class="['page-item', { active: page === current }]">
                 <a class="page-link" href="#" @click="pageChangeHadler(page)">
                     {{ page + 1 }} <span v-if="page === current" class="sr-only">(current)</span>
                 </a>

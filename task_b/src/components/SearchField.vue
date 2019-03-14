@@ -1,32 +1,33 @@
 <template>
     <div class="form-group">
-        <input type="text" class="form-control" v-model="innerValue" placeholder="Поиск...">
+        <input v-model="innerValue" type="text" class="form-control" placeholder="Поиск..." />
     </div>
 </template>
 
 <script>
-    export default {
-        name: "SearchField",
-        props: {
-            value: {
-                type: String
-            }
+export default {
+    name: "SearchField",
+    props: {
+        value: {
+            type: String,
+            default: "",
         },
-        data: function () {
-            return {
-                innerValue:""
-            }
+    },
+    data: function() {
+        return {
+            innerValue: "",
+        };
+    },
+    watch: {
+        innerValue: "inputHandler",
+    },
+    mounted() {
+        this.innerValue = this.value;
+    },
+    methods: {
+        inputHandler: function() {
+            this.$emit("input", this.innerValue);
         },
-        mounted() {
-            this.innerValue = this.value
-        },
-        watch: {
-            "innerValue": "inputHandler"
-        },
-        methods:{
-            inputHandler: function () {
-                this.$emit("input", this.innerValue)
-            }
-        }
-    }
+    },
+};
 </script>
