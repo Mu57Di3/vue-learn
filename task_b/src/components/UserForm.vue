@@ -2,12 +2,28 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label>Имя</label> <input v-model="user['name']['first']" type="text" class="form-control" />
+                <label>Имя</label>
+                <input
+                    v-model="user['name']['first']"
+                    v-validate="'required'"
+                    name="first"
+                    type="text"
+                    class="form-control"
+                />
+                <span v-if="errors.has('first')" class="invalid-feedback">{{ errors.first("first") }}</span>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label>Фамилия</label> <input v-model="user['name']['last']" type="text" class="form-control" />
+                <label>Фамилия</label>
+                <input
+                    v-model="user['name']['last']"
+                    v-validate="'required'"
+                    name="last"
+                    type="text"
+                    class="form-control"
+                />
+                <span v-if="errors.has('last')" class="invalid-feedback">{{ errors.first("last") }}</span>
             </div>
         </div>
         <div class="col-md-6">
@@ -16,6 +32,12 @@
             </div>
         </div>
         <div class="col-md-6">
+            <div class="form-group">
+                <label>День рожденья</label>
+                <date-picker v-model="user['birthday']"></date-picker>
+            </div>
+        </div>
+        <div class="col-md-12">
             <div class="form-group">
                 <label>Цвет глаз</label>
                 <select v-model="user['eyeColor']" class="form-control">
@@ -32,7 +54,15 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label>e-mail</label> <input v-model="user['email']" type="email" class="form-control" />
+                <label>e-mail</label>
+                <input
+                    v-model="user['email']"
+                    v-validate="'required|email'"
+                    type="email"
+                    name="email"
+                    class="form-control"
+                />
+                <span v-if="errors.has('email')" class="invalid-feedback">{{ errors.first("email") }}</span>
             </div>
         </div>
         <div class="col-md-12">
@@ -51,37 +81,41 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label>Зарегистрированна</label> <input v-model="user['registered']" type="text" class="form-control" />
+                <label>Зарегистрированна</label>
+                <date-picker v-model="user['registered']"></date-picker>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-group">
-                <br />
-                <div class="form-check form-check-inline">
-                    <input
-                        id="defaultCheck1"
-                        v-model="user['isActive']"
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                    />
-                    <label class="form-check-label" for="defaultCheck1"> Активность </label>
-                </div>
+            <div class="form-group ">
+                <label>Активность</label>
+                <custom-checkbox v-model="user['isActive']"></custom-checkbox>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <label>О юзере</label> <textarea v-model="user['about']" class="form-control" rows="3"></textarea>
+                <label>О юзере</label>
+                <rich-editor v-model="user['about']"></rich-editor>
             </div>
         </div>
+        <pre>
+            {{ userData }}
+        </pre>
     </div>
 </template>
 
 <script>
 import _ from "lodash";
+import DatePicker from "./DatePicker";
+import RichEditor from "./RichEditor";
+import CustomCheckbox from "./CustomCheckbox";
 
 export default {
     name: "UserForm",
+    components: {
+        DatePicker,
+        RichEditor,
+        CustomCheckbox,
+    },
     model: {
         prop: "userData",
         event: "save-user",
@@ -103,13 +137,17 @@ export default {
             deep: true,
         },
     },
-    mounted: function() {
+    created: function() {
         this.user = this.userData;
     },
     methods: {
         saveHandler: function() {
-            this.$emit("save-user", _.cloneDeep(this.user));
+            if (this.$validator.validate()) {
+                this.$emit("save-user", _.cloneDeep(this.user));
+            }
         },
     },
 };
 </script>
+
+<style></style>

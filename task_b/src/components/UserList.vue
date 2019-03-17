@@ -7,45 +7,49 @@
             <div class="col-md-12">
                 <table class="table table-striped">
                     <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Фото</th>
-                            <th scope="col">Имя</th>
-                            <th scope="col">Компания</th>
-                            <th scope="col">&nbsp;</th>
-                        </tr>
+                        <slot name="header">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Фото</th>
+                                <th scope="col">Имя</th>
+                                <th scope="col">Компания</th>
+                                <th scope="col">&nbsp;</th>
+                            </tr>
+                        </slot>
                     </thead>
                     <tbody>
                         <tr v-for="employee in listPage" :key="employee.id">
-                            <th scope="row">{{ employee.id }}</th>
-                            <td>
-                                <img
-                                    :src="employee.picture || './img/no-avatar.png'"
-                                    class="img-thumbnail rounded mx-auto "
-                                />
-                            </td>
-                            <td>{{ `${employee.name.first} ${employee.name.last}` }}</td>
-                            <td>{{ employee.company }}</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button
-                                        type="button"
-                                        class="btn btn-link"
-                                        title="Редактировать"
-                                        @click="editHandler(employee.id)"
-                                    >
-                                        <i class="fas fa-user-edit"></i>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        class="btn btn-link"
-                                        title="Удалить"
-                                        @click="removeHandler(employee.id)"
-                                    >
-                                        <i class="fas fa-user-slash"></i>
-                                    </button>
-                                </div>
-                            </td>
+                            <slot :employee="employee" name="list-row">
+                                <th scope="row">{{ employee.id }}</th>
+                                <td>
+                                    <img
+                                        :src="employee.picture || './img/no-avatar.png'"
+                                        class="img-thumbnail rounded mx-auto "
+                                    />
+                                </td>
+                                <td>{{ `${employee.name.first} ${employee.name.last}` }}</td>
+                                <td>{{ employee.company }}</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button
+                                            type="button"
+                                            class="btn btn-link"
+                                            title="Редактировать"
+                                            @click="editHandler(employee.id)"
+                                        >
+                                            <i class="fas fa-user-edit"></i>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-link"
+                                            title="Удалить"
+                                            @click="removeHandler(employee.id)"
+                                        >
+                                            <i class="fas fa-user-slash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </slot>
                         </tr>
                     </tbody>
                 </table>

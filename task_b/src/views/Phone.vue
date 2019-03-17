@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <h1><i class="fas fa-users"></i> Список пользователей</h1>
+            <h1><i class="fas fa-users"></i> Телефоны</h1>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -10,9 +10,6 @@
                         <span>
                             Пользователей в базе <span class="badge badge-secondary">{{ employeesCount }}</span>
                         </span>
-                        <button type="button" class="btn btn-primary float-right  btn-sm">
-                            <i class="fas fa-sync-alt"></i>
-                        </button>
                     </div>
                     <div class="card-body">
                         <users-list
@@ -21,6 +18,18 @@
                             @edit-user="editHandler"
                             @search-user="searchHandler"
                         >
+                            <template v-slot:header>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Имя</th>
+                                    <th scope="col">Телефон</th>
+                                </tr>
+                            </template>
+                            <template v-slot:list-row="slotProps">
+                                <td>{{ slotProps.employee.id }}</td>
+                                <td>{{ `${slotProps.employee.name.first} ${slotProps.employee.name.last}` }}</td>
+                                <td>{{ slotProps.employee.phone }}</td>
+                            </template>
                         </users-list>
                     </div>
                 </div>
@@ -34,7 +43,7 @@ import UserList from "../components/UserList";
 import query from "../tools/Query";
 
 export default {
-    name: "Home",
+    name: "Phone",
     components: {
         "users-list": UserList,
     },
