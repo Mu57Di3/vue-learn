@@ -25,10 +25,10 @@
                                     <th scope="col">Телефон</th>
                                 </tr>
                             </template>
-                            <template v-slot:list-row="slotProps">
-                                <td>{{ slotProps.employee.id }}</td>
-                                <td>{{ `${slotProps.employee.name.first} ${slotProps.employee.name.last}` }}</td>
-                                <td>{{ slotProps.employee.phone }}</td>
+                            <template v-slot:list-row="{ employee }">
+                                <td>{{ employee.id }}</td>
+                                <td>{{ `${employee.name.first} ${slotProps.employee.name.last}` }}</td>
+                                <td>{{ employee.phone }}</td>
                             </template>
                         </users-list>
                     </div>
@@ -63,7 +63,7 @@ export default {
     },
     methods: {
         removeHandler: function(id) {
-            if (confirm("Вы уверенны что хотите удалить пользователя?")) {
+            if (confirm("Вы уверены что хотите удалить пользователя?")) {
                 query.delete(`employees/${id}`).then(() => {
                     this.employees = this.employees.filter(item => {
                         return item.id !== id;

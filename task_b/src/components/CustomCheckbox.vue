@@ -1,6 +1,6 @@
 <template>
     <div class="custom-control custom-checkbox">
-        <input :id="uniqId" v-model="value" type="checkbox" class="checkbox" />
+        <input :id="uniqId" :value="value" type="checkbox" class="checkbox" @change="changeHandler" />
         <label :for="uniqId">&nbsp;&nbsp;&nbsp;&nbsp;</label>
     </div>
 </template>

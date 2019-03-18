@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-md-3"><search-field v-model="lastNameFilter"></search-field></div>
+            <div class="col-md-3"><search-field v-model.trim="lastNameFilter"></search-field></div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -57,16 +57,9 @@
         </div>
         <div class="row">
             <div class="col-md-10">
-                <pagination
-                    v-if="list.length > pageSize"
-                    v-model="currentPage"
-                    :total="listSize"
-                    :size="pageSize"
-                ></pagination>
+                <pagination v-if="hasPages" v-model="currentPage" :total="listSize" :size="pageSize"></pagination>
             </div>
-            <div class="col-md-2">
-                <page-size-control v-if="list.length > pageSize" v-model="pageSize"></page-size-control>
-            </div>
+            <div class="col-md-2"><page-size-control v-if="hasPages" v-model="pageSize"></page-size-control></div>
         </div>
     </div>
 </template>
@@ -107,6 +100,10 @@ export default {
 
         firstIdOfPage: function() {
             return this.currentPage * this.pageSize;
+        },
+
+        hasPages: function() {
+            return this.list.length > this.pageSize;
         },
     },
     watch: {

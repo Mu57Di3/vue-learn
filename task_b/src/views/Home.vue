@@ -54,7 +54,7 @@ export default {
     },
     methods: {
         removeHandler: function(id) {
-            if (confirm("Вы уверенны что хотите удалить пользователя?")) {
+            if (confirm("Вы уверены что хотите удалить пользователя?")) {
                 query.delete(`employees/${id}`).then(() => {
                     this.employees = this.employees.filter(item => {
                         return item.id !== id;

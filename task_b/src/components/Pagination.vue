@@ -2,12 +2,12 @@
     <nav v-if="total > size" aria-label="Page navigation example">
         <ul class="pagination">
             <li :class="['page-item', { disabled: current === 0 }]">
-                <a class="page-link" href="#" aria-label="Previous" @click="pageChangeHadler(current - 1)">
+                <a class="page-link" href="#" aria-label="Previous" @click.stop="pageChangeHadler(current - 1, $event)">
                     <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
                 </a>
             </li>
             <li v-for="page in pageGenerator" :key="page" :class="['page-item', { active: page === current }]">
-                <a class="page-link" href="#" @click="pageChangeHadler(page)">
+                <a class="page-link" href="#" @click.stop="pageChangeHadler(page)">
                     {{ page + 1 }} <span v-if="page === current" class="sr-only">(current)</span>
                 </a>
             </li>
@@ -53,7 +53,8 @@ export default {
         },
     },
     methods: {
-        pageChangeHadler: function(newPage) {
+        pageChangeHadler: function(newPage, event) {
+            event.stopPropagation();
             if (newPage >= 0 && newPage <= this.pagesCount - 1) {
                 this.$emit("page-changed", newPage);
             }
