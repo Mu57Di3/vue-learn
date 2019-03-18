@@ -2,7 +2,7 @@
     <nav v-if="total > size" aria-label="Page navigation example">
         <ul class="pagination">
             <li :class="['page-item', { disabled: current === 0 }]">
-                <a class="page-link" href="#" aria-label="Previous" @click.stop="pageChangeHadler(current - 1, $event)">
+                <a class="page-link" href="#" aria-label="Previous" @click.stop="pageChangeHadler(current - 1)">
                     <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
                 </a>
             </li>
@@ -53,8 +53,7 @@ export default {
         },
     },
     methods: {
-        pageChangeHadler: function(newPage, event) {
-            event.stopPropagation();
+        pageChangeHadler: function(newPage) {
             if (newPage >= 0 && newPage <= this.pagesCount - 1) {
                 this.$emit("page-changed", newPage);
             }
