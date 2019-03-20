@@ -16,7 +16,7 @@
                     </div>
                     <div class="card-body">
                         <users-list
-                            :list="employees"
+                            :list="userList"
                             @remove-user="removeHandler"
                             @edit-user="editHandler"
                             @search-user="searchHandler"
@@ -40,13 +40,15 @@ export default {
     },
     data: function() {
         return {
-            employees: [],
             search: "",
         };
     },
     computed: {
         employeesCount: function() {
-            return this.employees.length;
+            return this.$store.getters.userListLength;
+        },
+        userList: function() {
+            return this.$store.getters.usersList;
         },
     },
     mounted: function() {
@@ -74,9 +76,7 @@ export default {
                     "name.last_like": this.search,
                 };
             }
-            query.get("employees", options).then(response => {
-                this.employees = response.data;
-            });
+            this.$store.dispatch("loadUsers", options);
         },
 
         searchHandler: function(search) {
